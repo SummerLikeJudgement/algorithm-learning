@@ -67,12 +67,18 @@ int main()
         scanf("%d%d%d",&l, &r, &c);
         insert(l, r, c);
     }
-    int t = 0;
-    for (int i = 1 ; i<=n ; i++)
-    {
-        t += B[i];
-        printf("%d ", t);
-    }
+    // 边计算边输出
+    // int t = 0;
+    // for (int i = 1 ; i<=n ; i++)
+    // {
+    //     t += B[i];
+    //     printf("%d ", t);
+    // }
+    // 计算新原矩阵再输出
+    for (int i=1 ; i<=n ; i++)
+        B[i] += B[i-1];
+    for (int i=1 ; i<=n ; i++)
+        printf("%d",B[i]);
 
     return 0;
 }
