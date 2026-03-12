@@ -69,3 +69,4 @@ Testing/
 .cache/
 
 .exe
+.code-workspace
