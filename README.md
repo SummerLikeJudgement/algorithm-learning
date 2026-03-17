@@ -68,6 +68,7 @@ void merge_sort(int q[], int l, int r)
 }
 ```
 
+
 # 双指针算法
 
 ```cpp
@@ -138,3 +139,38 @@ for (int i = 0; i < n; i ++ )
 ```
 - 本质上单调队列和单调栈的原理相同，只是多了个滑动窗口的实现
 ## KMP
+
+## Trie
+```cpp
+int son[N][26]; //字符串总长度最多N,只有26种字符。下标为0的点既是根结点,也是空结点
+int cnt[N];//结点的单词数
+int idx;//当前用到的节点
+
+void insert(char str[])
+{
+    int p=0;
+    for (int i=0 ; str[i] ; i++)
+    {
+        int u = str[i]-'a';
+        if (!son[p][u]) // 如果不存在子节点
+            son[p][u] = ++idx;
+        p = son[p][u];
+    }
+    cnt[p]++;
+}
+
+int query(char str[])
+{
+    int p = 0;
+    for (int i=0 ; str[i] ; i++)
+    {
+        int u = str[i]-'a';
+        if(son[p][u])
+            p = son[p][u];
+        else
+            return 0;
+    }
+    return cnt[p];
+}
+
+```
