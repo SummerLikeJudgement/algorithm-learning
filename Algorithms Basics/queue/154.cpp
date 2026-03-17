@@ -76,6 +76,7 @@ int main()
     }
     hh=0, tt=-1;
     printf("\n");
+    
     //输出窗口最大值
     for (int i=0 ; i<n ; i++)
     {

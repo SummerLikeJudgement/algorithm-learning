@@ -126,5 +126,15 @@ q[hh];
 if (hh <= tt) {}
 ```
 ### 单调队列
-
-
+```cpp
+常见模型：找出滑动窗口中的最大值/最小值
+int hh = 0, tt = -1;
+for (int i = 0; i < n; i ++ )
+{
+    while (hh <= tt && check_out(q[hh])) hh ++ ;  // 判断队头是否滑出窗口
+    while (hh <= tt && check(q[tt], i)) tt -- ;
+    q[ ++ tt] = i;
+}
+```
+- 本质上单调队列和单调栈的原理相同，只是多了个滑动窗口的实现
+## KMP
