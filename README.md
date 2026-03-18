@@ -172,5 +172,24 @@ int query(char str[])
     }
     return cnt[p];
 }
+```
+## 并查集
+```cpp
+int p[N];// 存储每个编号的父节点
 
+//返回编号x的祖宗节点+路径压缩
+int find(int x)
+{
+    if(p[x] != x)
+        p[x] = find(p[x]);
+    return p[x];
+}
+
+// 合并集合
+p[find(a)] = find(b); // 使a的祖宗节点成为b的子节点
+// 询问集合
+if(find(a) == find(b))
+    printf("Yes\n");
+else
+    printf("No\n");
 ```
