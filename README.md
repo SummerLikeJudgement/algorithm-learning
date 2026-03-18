@@ -196,5 +196,29 @@ else
 
 ## 堆
 ```cpp
+int h[N], size_;//堆，堆当前存入的个数
 
+// 将x位置的节点尝试down
+void down(int x)
+{
+    int t = x;// t存储三个节点中最小的数的下标
+    if (x*2 <= size_ && h[x*2] < h[t]) t = x*2;
+    if (x*2+1 <= size_ && h[x*2+1] < h[t]) t = x*2+1;
+
+    if (x != t)
+    {
+        swap(h[t], h[x]);
+        down(t);
+    }
+}
+
+// 将x位置的节点尝试up
+void up(int x)
+{
+    while(x/2 && h[x/2]>h[x]) // 当父节点存在并且更大
+    {
+        swap(h[x/2], h[x]);
+        x /= 2;
+    }
+}
 ```
