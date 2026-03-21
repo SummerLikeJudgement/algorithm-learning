@@ -222,3 +222,206 @@ void up(int x)
     }
 }
 ```
+
+## 哈希表
+1. 开放寻址法
+```cpp
+const int N = 200003; // 最好用质数（编程遍历求），并且是题目数据范围的2~3倍
+const int null = 0x3f3f3f3f; // 约定数据范围之外的数表示空
+
+int h[N];// hash数组
+
+// 如果x在hash中，返回位置；如果x不在hash中，返回应该存的位置
+int find(int x)
+{
+    int k = (x % N + N) % N; // 确保k是正数
+
+    while(h[k]!=null && h[k]!=x)
+    {
+        k++;
+        if (k == N) 
+            k=0;
+    }
+    return k;
+}
+//初始化
+memset(h, 0x3f, sizeof h); // memset 是按字节设置的，不是按 int 设置的！
+```
+
+2. 拉链法
+```cpp
+const int N = 100003; // 最好用质数（编程遍历求）
+
+int h[N];// hash数组，每个位置相当于head头指针，指向链表中第一个节点（-1表示空）
+int e[N], ne[N], idx;// 用一个链表存储所有hash的N条链（将链表拆为N个链）
+//向表中插入x
+void insert(int x)
+{
+    int k = (x % N + N) % N; // 确保k是正数
+    //将x插入链表中
+    e[idx] = x;
+    ne[idx] = h[k];
+    h[k] = idx++;
+}
+bool find(int x)
+{
+    int k = (x % N + N) % N; // 确保k是正数
+
+    for (int i=h[k] ; i!=-1 ; i=ne[i])
+        if(e[i] == x) return true;
+    return false;
+}
+//初始化
+memset(h, -1, sizeof h); //将h清空，全部置为-1
+```
+
+- 两个方法基本相同
+### 字符串前缀哈希
+```cpp
+const int N = 1e5+10;
+const int P = 131;// 131或13331
+
+char str[N];
+ULL h[N]; // 哈希表
+ULL p[N]; // 预计算存储P^i
+// 判断[l,r]的hash值
+ULL get(int l, int r)
+{
+    return h[r] - h[l-1]*p[r-l+1];
+}
+
+p[0] = 1;
+//初始化，求p和字符串前缀h
+for(int i=1 ; i<=n ; i++)
+{
+    p[i] = p[i-1]*P;
+    h[i] = h[i-1]*P + str[i];
+}
+```
+## STL
+1. vector
+```
+vector, 变长数组，倍增的思想
+    size()  返回元素个数
+    empty()  返回是否为空
+    clear()  清空
+    front()/back()
+    push_back()/pop_back() 增加/删除元素
+    begin()/end()
+    []
+    支持比较运算，按字典序
+```
+
+2. pair
+```
+pair<int, int>
+    first, 第一个元素
+    second, 第二个元素
+    支持比较运算，以first为第一关键字，以second为第二关键字（字典序）
+```
+
+3. string
+```
+string，字符串
+    size()/length()  返回字符串长度
+    empty()
+    clear()
+    substr(起始下标，(子串长度))  返回子串
+    c_str()  返回字符串所在字符数组的起始地址
+```
+
+4. queue
+```
+queue, 队列
+    size()
+    empty()
+    push()  向队尾插入一个元素
+    front()  返回队头元素
+    back()  返回队尾元素
+    pop()  弹出队头元素
+```
+
+5. priority_queue
+```
+priority_queue, 优先队列，默认是大根堆
+    size()
+    empty()
+    push()  插入一个元素
+    top()  返回堆顶元素
+    pop()  弹出堆顶元素
+    定义成小根堆的方式：priority_queue<int, vector<int>, greater<int>> q;
+```
+6. stack
+```
+stack, 栈
+    size()
+    empty()
+    push()  向栈顶插入一个元素
+    top()  返回栈顶元素
+    pop()  弹出栈顶元素
+```
+
+7. duque
+```
+deque, 双端队列
+    size()
+    empty()
+    clear()
+    front()/back()
+    push_back()/pop_back()
+    push_front()/pop_front()
+    begin()/end()
+    []
+```
+
+8. hash
+```
+set, map, multiset, multimap, 基于平衡二叉树（红黑树），动态维护有序序列
+    size()
+    empty()
+    clear()
+    begin()/end()
+    ++, -- 返回前驱和后继，时间复杂度 O(logn)
+
+    set/multiset
+        insert()  插入一个数
+        find()  查找一个数
+        count()  返回某一个数的个数
+        erase()
+            (1) 输入是一个数x，删除所有x   O(k + logn)
+            (2) 输入一个迭代器，删除这个迭代器
+        lower_bound()/upper_bound()
+            lower_bound(x)  返回大于等于x的最小的数的迭代器
+            upper_bound(x)  返回大于x的最小的数的迭代器
+    map/multimap
+        insert()  插入的数是一个pair
+        erase()  输入的参数是pair或者迭代器
+        find()
+        []  注意multimap不支持此操作。 时间复杂度是 O(logn)
+        lower_bound()/upper_bound()
+
+unordered_set, unordered_map, unordered_multiset, unordered_multimap, 基于哈希表
+    和上面类似，增删改查的时间复杂度是 O(1)
+    不支持 lower_bound()/upper_bound()， 迭代器的++，--
+```
+
+9. bitset
+```
+bitset, 圧位
+    bitset<10000> s;
+    ~, &, |, ^
+    >>, <<
+    ==, !=
+    []
+
+    count()  返回有多少个1
+
+    any()  判断是否至少有一个1
+    none()  判断是否全为0
+
+    set()  把所有位置成1
+    set(k, v)  将第k位变成v
+    reset()  把所有位变成0
+    flip()  等价于~
+    flip(k) 把第k位取反
+```
