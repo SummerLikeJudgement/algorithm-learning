@@ -30,7 +30,6 @@ void quick_sort(int q[], int l, int r)
 
 ## 归并排序
 ```cpp
-
 void merge_sort(int q[], int l, int r)
 {
     if (l>=r) return;
@@ -311,6 +310,7 @@ vector, 变长数组，倍增的思想
     []
     支持比较运算，按字典序
 ```
+    - 使用vector要尽量减少增加空间的次数
 
 2. pair
 ```
