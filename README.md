@@ -297,6 +297,28 @@ for(int i=1 ; i<=n ; i++)
     h[i] = h[i-1]*P + str[i];
 }
 ```
+
+## 树和图
+所有的树与图都能用有向图表示
+```cpp
+// 将一个单链表分为多个点的单链表
+int h[N];// 储存每个点链表的头指针
+int e[N]; // 当前节点当前的值
+int ne[N]; // 当前节点的下一个节点的指针
+int idx;// 链表使用到的节点
+
+// 添加一条边a->b
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+// 初始化
+idx = 0;
+memset(h, -1, sizeof h);// -1代表没有指向任何节点
+```
+
+
 ## STL
 1. vector
 ```
@@ -425,3 +447,6 @@ bitset, 圧位
     flip()  等价于~
     flip(k) 把第k位取反
 ```
+
+# 搜索与图论
+模板参考：https://www.acwing.com/file_system/file/content/whole/index/content/3272/
