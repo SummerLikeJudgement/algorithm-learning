@@ -66,7 +66,7 @@ void merge_sort(int q[], int l, int r)
     }
 }
 ```
-
+## 拓扑排序
 
 # 双指针算法
 
@@ -364,15 +364,17 @@ queue, 队列
 ```
 
 5. priority_queue
+`#include <queue>`
 ```
-priority_queue, 优先队列，默认是大根堆
+priority_queue, 优先队列，默认是大根堆(堆顶元素最大)
     size()
     empty()
     push()  插入一个元素
     top()  返回堆顶元素
     pop()  弹出堆顶元素
-    定义成小根堆的方式：priority_queue<int, vector<int>, greater<int>> q;
+    定义成小根堆(堆顶元素最小)的方式：priority_queue<int, vector<int>, greater<int>> q;
 ```
+
 6. stack
 ```
 stack, 栈
@@ -450,3 +452,43 @@ bitset, 圧位
 
 # 搜索与图论
 模板参考：https://www.acwing.com/file_system/file/content/whole/index/content/3272/
+## 树和图的遍历
+所有树和图都能本质用有向图表示
+时间复杂度**O(n+m)**（n表示点数，m表示边数）
+1. DFS
+```cpp
+int dfs(int u) // 编号u的点处的dfs
+{
+    st[u] = true; // 点u已经被遍历
+    for(int i=h[u] ; i!=-1 ; i=ne[i])
+    {
+        int j = e[i];
+        if(!st[j])
+            dfs(j);
+    }
+}
+```
+
+2. BFS
+```cpp
+// 初始化
+queue<int> q; // 记录遍历的点
+st[1] = true; // 1号点已经遍历
+q.push(1); 
+while(q.size())
+{
+    int t = q.front();
+    q.pop();
+    for(int i=h[t] ; i!=-1 ; i=ne[i])
+    {
+        int j = e[i];
+        if(!st[j])
+        {
+            q.push(j);
+            st[j] = true;
+        }
+    }
+}
+```
+## 最短路问题
+### 朴素Dijkstra
