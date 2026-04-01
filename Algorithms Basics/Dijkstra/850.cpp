@@ -69,7 +69,7 @@ int dijkstra()
         heap.pop();
 
         int distance = t.first, num = t.second;
-        if(st[num]) // 已经确定最小距离
+        if(st[num]) // 已经确定最小距离，则跳过
             continue;
         
         st[num] = true;

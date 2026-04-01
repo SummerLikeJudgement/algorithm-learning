@@ -45,7 +45,7 @@ int dijkstra()
     memset(dist, 0x3f, sizeof dist);
     dist[1] = 0;
 
-    for(int i=0 ; i<n ; i++)
+    for(int i=0 ; i<n-1 ; i++) // 1号点的最短dist已经确定，所以只用遍历n-1次
     {
         int t = -1;
         // 找到非st中距离最近的点
