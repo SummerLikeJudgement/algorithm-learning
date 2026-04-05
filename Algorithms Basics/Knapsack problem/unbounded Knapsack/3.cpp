@@ -54,9 +54,9 @@
 // }
 
 /// 对三重循环进行优化，k的循环可以简化
-/// f(i,j) = max(f(i-1,j),f(i-1,j-v)+w,f(i-1,j-2v)+2w,...)
-/// f(i,j-v) =        max(f(i-1,j-v),f(i-1,j-2v)+w,...)
-/// 即f(i,j)=max(f(i-1,j), f(i-1,j-v)+w)，注意j<v时，f(i-1,j-v)可能不存在
+/// f(i,j) = max(f(i-1,j),f(i-1,j-v)+w,f(i-1,j-2v)+2w,...,f(i-1,j-kv)+kw)，其中(0<=k<=j/v)
+/// f(i,j-v) =        max(f(i-1,j-v),f(i-1,j-2v)+w,...,f(i-1,j-kv)+(k+1)w)，其中(0<=k<=j/v)
+/// 即f(i,j)=max(f(i-1,j), f(i,j-v)+w)，注意j<v时，f(i-1,j-v)可能不存在
 // #include <iostream>
 
 // using namespace std;
