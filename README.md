@@ -460,7 +460,7 @@ bitset, 圧位
 int dfs(int u) // 编号u的点处的dfs
 {
     st[u] = true; // 点u已经被遍历
-    for(int i=h[u] ; i!=-1 ; i=ne[i])
+    for(int i=h[u] ; i!=-1 ; i=ne[i]) // 手写邻接表存储点
     {
         int j = e[i];
         if(!st[j])
@@ -479,7 +479,7 @@ while(q.size())
 {
     int t = q.front();
     q.pop();
-    for(int i=h[t] ; i!=-1 ; i=ne[i])
+    for(int i=h[t] ; i!=-1 ; i=ne[i]) // 手写邻接表存储点
     {
         int j = e[i];
         if(!st[j])
@@ -490,6 +490,7 @@ while(q.size())
     }
 }
 ```
+
 ## 最短路问题
 n表示点的个数
 m表示边的条数

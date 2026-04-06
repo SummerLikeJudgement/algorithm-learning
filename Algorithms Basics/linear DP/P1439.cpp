@@ -42,7 +42,7 @@
 
 using namespace std;
 
-const int N=1e5+10;
+const int N=5010;
 
 int n;
 int A[N], B[N];
