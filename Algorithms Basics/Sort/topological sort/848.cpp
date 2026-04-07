@@ -52,17 +52,17 @@ void add(int x, int y)
 
 bool topsort()
 {
+    // 初始化
     hh = 0;
     tt = -1;
-    // 将入度为0的点加入队列
-    for(int i=1 ; i<=n ; i++)
+    for(int i=1 ; i<=n ; i++)// 将入度为0的点加入队列
         if(!d[i])
             q[++tt] = i;
     
     while(hh<=tt)
     {
         int t = q[hh++];
-        for(int i=h[t] ; i!=-1 ; i=ne[i])
+        for(int i=h[t] ; i!=-1 ; i=ne[i])// 遍历删除所有出边，更新入度
         {
             int j = e[i];
             d[j]--;

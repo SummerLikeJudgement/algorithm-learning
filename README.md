@@ -2,12 +2,13 @@
 
 ------------
 # 排序
+模板参考：https://www.acwing.com/file_system/file/content/whole/index/content/3190/
 ## 快速排序
-
+- 不稳定的
 ```cpp
 void quick_sort(int q[], int l, int r)
 {
-    if (l>=r) return;
+    if(l>=r) return;
 
     int x = q[l]; //取base元素
     int i = l-1, j = r+1; //注意指针要放在边界两侧，为了后面指针移动方便
@@ -29,6 +30,7 @@ void quick_sort(int q[], int l, int r)
 ```
 
 ## 归并排序
+- 稳定的，更适合链式存储
 ```cpp
 void merge_sort(int q[], int l, int r)
 {
@@ -42,32 +44,54 @@ void merge_sort(int q[], int l, int r)
     while(i<=mid && j<=r)
     {
         if (q[i]<=q[j])
-        {
             tmp[k++] = q[i++];
-        }
         else
-        {
             tmp[k++] = q[j++];
-        }
     }
     //将剩余的序列放到tmp
     while(i<=mid)
-    {
         tmp[k++] = q[i++];
-    }
     while(j<=r)
-    {
         tmp[k++] = q[j++];
-    }
     //将tmp复制回q
     for (i = l, j = 0 ; i<=r ; i++, j++)
-    {
         q[i] = tmp[j];
-    }
 }
 ```
 ## 拓扑排序
-
+```cpp
+int n, m;// 点和边数量
+// 存储图
+int h[N], ne[N], e[N];
+int idx;
+// 队列
+int q[N];
+int hh, tt;
+// 每个点的入度
+int d[N]; // 在读入边时记录
+// 返回图存在拓扑排序。q中就是拓扑序列
+bool tolsort()
+{
+    // 初始化
+    tt = -1; hh = 0;
+    for(int i=1 ; i<=n ; i++)// 找到所有入度为0的点
+        if(d[i] == 0)
+            q[++tt] = i;
+    while(tt>=hh)
+    {
+        int t = q[hh--];
+        for(int i=h[t] ; i!=-1 ; i=ne[i])// 遍历删除所有出边，更新入度
+        {
+            int j = e[i];
+            d[j]--;
+            if(d[j] == 0)
+                q[++tt] = j;
+        }
+    }
+    
+    return tt == n-1;// 如果读入n-1个点，则存在拓扑序列，否则没有
+}
+```
 # 双指针算法
 
 ```cpp
@@ -78,6 +102,76 @@ for (int i=0, j=0 ; i<n ; i++)
     //每个题目的具体逻辑/计算答案
 }
 ```
+# 二分
+## 整数/离散二分
+```cpp
+int q[N]; // 有序数组
+int n; // 数组长度
+// 找左区间的右端点
+int binary_search1(int x) // 返回x所在的下标
+{
+    int l = 0, r = n-1;
+    while(l<r)
+    {
+        int mid = l+r+1 >> 1;
+        if(check(mid)) // mid在左区间
+            l=mid;
+        else // mid在右区间
+            r=mid-1;
+    }
+    return l;
+}
+// 找右区间的左端点
+int binary_search2(int x)
+{
+    int l = 0, r = n-1;
+    while(l<r)
+    {
+        int mid = l+r >> 1;
+        if(check(mid)) // mid在左区间
+            l = mid + 1;
+        else
+            r = mid;
+    }
+    return l;
+}
+```
+## 浮点数二分
+- 保留4位小数，1e-6;保留5位小数，1e-7;保留6位小数，1e-8
+```cpp
+double binary_search(double l, double r)
+{
+    while(r-l>1e-8)
+    {
+        double mid = (l+r) / 2;
+        if(check(mid)) // 在右区间
+            r=mid;
+        else(check(mid)) // 在左区间
+            l=mid;
+    }
+    return l;
+}
+```
+# 前缀和
+## 1维前缀和
+```cpp
+// 计算前缀和数组
+for (int i=1 ; i<=n ; i++) // 从下标1开始，避免边界问题
+    S[i] = S[i-1]+a[i];
+// 使用前缀和数组计算区间
+ans = S[r]-S[l-1];
+```
+## 2维前缀和
+```cpp
+// 计算前缀和数组
+for (int i=1 ; i<=n ; i++) // 从下标1开始，避免边界问题
+    for (int j=1 ; j<=m ; j++)
+        S[i][j] = S[i-1][j] + S[i][j-1] - S[i-1][j-1] + a[i][j];
+// 使用前缀和数组计算区间
+ans = S[x2][y2] - S[x1-1][y2] - S[x2][y1-1] + S[x1-1][y1-1];
+```
+# 差分
+
 # 位运算
 ```cpp
 n >> k & 1 //求n的第k位数字 
@@ -403,7 +497,7 @@ deque, 双端队列
 set, map, multiset, multimap, 基于平衡二叉树（红黑树），动态维护有序序列
     size()
     empty()
-    clear()
+    clear()  删除所有元素
     begin()/end()
     ++, -- 返回前驱和后继，时间复杂度 O(logn)
 
