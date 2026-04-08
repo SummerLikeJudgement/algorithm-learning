@@ -36,7 +36,7 @@ const int N = 1010;
 
 int A[N][N], S[N][N];
 
-void insert(int x1, int y1, int x2, int y2, int c)
+void insert(int x1, int y1, int x2, int y2, int c) // x2>x1,y2>y1
 {
     S[x1][y1] += c;
     S[x2+1][y1] -= c;

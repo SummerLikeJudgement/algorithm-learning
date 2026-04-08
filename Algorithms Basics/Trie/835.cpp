@@ -32,9 +32,10 @@
 using namespace std;
 
 const int N=1e5+10;
+const int C=2e4+10;
 
 int son[N][26]; //字符串总长度最多N,只有26种字符.下标为0的点既是根结点,也是空结点
-int cnt[N];//结点的单词数
+int cnt[C];//结点的单词数
 int idx;//当前用到的节点
 char str[N];
 

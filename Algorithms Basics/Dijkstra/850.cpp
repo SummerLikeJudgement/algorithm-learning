@@ -44,7 +44,6 @@ int e[N]; // 编号
 int w[N]; // 权重
 // Dijkstra
 bool st[N];
-priority_queue<PII, vector<PII>, greater<PII>> heap; // 小根堆，元素是pair<距离,编号>
 int dist[N];
 
 void add(int x, int y, int z)
@@ -59,6 +58,7 @@ void add(int x, int y, int z)
 int dijkstra()
 {
     // 初始化
+    priority_queue<PII, vector<PII>, greater<PII>> heap; // 小根堆（找到距离最小），元素是pair<距离,编号>
     heap.push({0,1});// {距离,编号}。一定要是距离在前！
     memset(dist, 0x3f, sizeof dist);
     dist[1] = 0;
@@ -88,7 +88,6 @@ int dijkstra()
         return -1;
     else
         return dist[n];
-    
 }
 
 

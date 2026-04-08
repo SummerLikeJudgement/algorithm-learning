@@ -67,9 +67,11 @@ int main()
     for (int i=0 ; i<n ; i++)
     {
         //判断队头是否已经滑出窗口
-        if(hh<=tt && i-k+1>q[hh]) hh++; 
+        if(hh<=tt && i-k+1>q[hh]) 
+            hh++; 
         //如果队尾元素≥当前元素，说明队尾元素不可能成为后面窗口的最小值
-        while(hh<=tt && a[q[tt]]>=a[i]) tt--;
+        while(hh<=tt && a[q[tt]]>=a[i]) 
+            tt--;
         q[++tt] = i;
         //当窗口形成后，输出当前窗口的最小值
         if(i >= k-1) printf("%d ",a[q[hh]]);
@@ -81,9 +83,11 @@ int main()
     for (int i=0 ; i<n ; i++)
     {
         //判断队头是否已经滑出窗口
-        if(hh<=tt && i-k+1>q[hh]) hh++; 
+        if(hh<=tt && i-k+1>q[hh]) 
+            hh++; 
         //如果队尾元素<=当前元素，说明队尾元素不可能成为后面窗口的最大值
-        while(hh<=tt && a[q[tt]]<=a[i]) tt--;
+        while(hh<=tt && a[q[tt]]<=a[i]) 
+            tt--;
         q[++tt] = i;
         //当窗口形成后(处理了k个元素后)，输出当前窗口的最小值
         if(i >= k-1) printf("%d ",a[q[hh]]);

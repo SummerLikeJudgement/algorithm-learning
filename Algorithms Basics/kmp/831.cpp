@@ -32,8 +32,8 @@ using namespace std;
 const int N=1e5+10, M=1e6+10;
 
 int n, m;
-char p[N], s[M];
-int ne[N];
+char p[N], s[M];// p是模式串，s是目标串
+int ne[N];// 表示前i-1个字符匹配第i个字符不匹配，应该回退到的位置
 
 int main()
 {
@@ -51,7 +51,7 @@ int main()
     }
 
     //kmp匹配
-    for(int i=1, j=0 ; i<=m ; i++)//注意i=1,j=0
+    for(int i=1, j=0 ; i<=m ; i++)//注意i=1,j=0表示当前已匹配模板串的长度
     {
         while(j && s[i] != p[j+1])// 匹配未从零开始且下一个字符不匹配
             j = ne[j];// 模板串匹配向前推
