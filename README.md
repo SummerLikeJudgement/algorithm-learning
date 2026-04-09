@@ -867,6 +867,320 @@ int dijkstra()
 }
 ```
 ### Bellman-Ford
+适用于正负权边+单源最短路 -> 判断负权环
+- 时间复杂度**O(mn)**
 ```cpp
+struct Edge
+{int a, b, w}edges[M];
 
+int dist[N];
+int backup[N]; // 有负权回路时，每次循环需要备份dist
+// 求1号点到n号点不超过k条边的最短距离，如果不存在，则返回-1
+int Bellman_Ford()
+{
+    // 初始化
+    memset(dist, 0x3f, sizeof dist);
+    dist[1] = 0;
+    for(int i=0 ; i<k ; i++) // 循环k次，找到经过k条边的最短路径
+    {
+        memcpy(backup, dist, sizeof dist);
+        for(int j=1 ; j<=m ; j++)
+        {
+            auto e = edges[j];
+            if(dist[e.b] > backup[e.a]+e.w)
+                dist[e.b] = backup[e.a] + e.w;
+        }
+    }
+    if(dist[n] > 0x3f3f3f3f/2) return -1; // 遍历了所有边，所以有些dist会稍微小于INF
+    else return dist[n];
+}
+```
+#### 找负权环
+```cpp
+struct Edge
+{int a, b, w}edges[M];
+
+int dist[N];
+int backup[N]; // 有负权回路时，每次循环需要备份dist
+// 判断图是否存在负权环，如果不存在，则返回false
+bool Bellman_Ford()
+{
+    // 初始化
+    memset(dist, 0x3f, sizeof dist);
+    dist[1] = 0;
+    for(int i=0 ; i<n-1 ; i++) // 循环n-1次
+    {
+        memcpy(backup, dist, sizeof dist);
+        for(int j=1 ; j<=m ; j++)
+        {
+            auto e = edges[j];
+            if(dist[e.b] > backup[e.a]+e.w)
+                dist[e.b] = backup[e.a] + e.w;
+        }
+    }
+    // 第n次循环
+    for(int j=1 ; j<=m ; j++)
+    {
+        auto e = edges[j];
+        if(dist[e.b] > dist[e.a]+e.w)
+            return true;
+    }
+    return false;
+}
+```
+### SPFA
+适用于正负权边+单源最短路 -> 判断负权环
+- 时间复杂度一般**O(m)**，最大**O(mn)**
+```cpp
+int h[N], ne[N], e[N], w[N], idx; // 存储图
+int dist[N]; // 存储1号点到i的最短距离
+bool st[N]; // 存储每个点是否在队列中
+
+int SPFA()
+{
+    // 初始化
+    memset(dist, 0x3f, sizeof dist);
+    dist[1] = 0;
+
+    queue<int> q;
+    q.push(1);
+    st[1] = true;
+
+    while(q.size())
+    {
+        int t = q.front()
+        q.pop();
+        st[t] = false;
+
+        for(int i=h[t] ; i!=-1 ; i=ne[i])
+        {
+            int j = e[i];
+            if(dist[j] > dist[t]+w[t])
+            {
+                dist[j] = dist[t] + w[t];
+                if(!st[j])
+                {
+                    q.push(j);
+                    st[j] = true;
+                }
+            }
+        }
+    }
+    if(dist[n] == 0x3f3f3f3f) return -1;
+    else return dist[n];
+}
+```
+#### 找负权环
+```cpp
+int h[N], ne[N], e[N], w[N], idx; // 存储图
+int dist[N]; // 存储虚拟起点到i号点的最短距离
+bool st[N]; // 存储每个点是否在队列中
+int cnt[N]; // 存储虚拟起点到i号点最短路径的边数
+
+bool spfa()
+{
+    // 初始化，初始化dist数组为dist[i]=0
+    queue<int> q;
+    for(int i=1 ; i<=n ; i++)
+    {
+        q.push(i);
+        st[i] = true;
+    }
+
+    while(q.size())
+    {
+        int t = q.fornt();
+        q.pop();
+        st[t] = false;
+
+        for(int i=h[t] ; i!=-1 ; i=ne[i])
+        {
+            int j = e[i];
+            if(dist[j] > dist[i]+w[j])
+            {
+                cnt[j] = cnt[i] + 1;
+                dist[j] = dist[i]+w[j];
+                if(dist[j] >= n)
+                    return true;
+                if(!st[j])
+                {
+                    q.push(j);
+                    st[j] = true;
+                }
+            }
+        }
+    }
+    return false;
+}
+```
+### Floyd
+适用于正负权边+无负权环+多源最短路+稠密图
+- 时间复杂度**O(n^3)**
+```cpp
+int g[N][N]; // 存储图
+// 初始化
+for(int i=1 ; i<=n ; i++)
+    for(int j=1 ; j<=n ; j++)
+        if(i == j) g[i][j] = 0;
+        else g[i][j] = INF;
+// 算法结束后，g[a][b]表示a到b的最短距离
+void floyd()
+{
+    for(int k=1 ; k<=n ; k++)
+        for(int i=1 ; i<=n ; i++)
+            for(int j=1 ; j<=n ; j++)
+                g[i][j] = min(g[i][j], g[i][k]+g[k][j]);
+}
+```
+## 最小生成树
+### 朴素Prim
+适用于稠密图
+- 时间复杂度**O(n^2)**
+```cpp
+int g[N][N]; // 存储图
+bool st[N]; // 存储每个点是否已经在生成树中
+int dist[N]; // 表示点到当前最小生成树的最小距离
+// 如果图不连通，则返回INF(值是0x3f3f3f3f), 否则返回最小生成树的树边权重之和
+int Prim()
+{
+    // 初始化
+    int ans = 0;
+    memset(dist, 0x3f, sizeof dist);
+    for(int i=0 ; i<n ; i++)// 循环n次，因为没有提前确定最短路径的点了
+    {
+        int t = -1;
+        // 找到非st的距离集合最短的点
+        for(int j=1 ; j<=n ; j++)
+        {
+            if(!st[j] && (t==-1 || dist[t]>dist[j]))
+                t = j;
+        }
+
+        st[t] = true;
+        if(i && dist[t]==INF) return INF;
+        if(i) ans += dist[t];
+        for(int j=1 ; j<=n ; j++)
+            dist[j] = min(dist[j], g[t][j]); 
+    }
+    return ans;
+}
+```
+### Kruskal
+- 时间复杂度**O(mlogn)**
+```cpp
+int p[N];
+
+struct Edge
+{
+    int a, b, w;
+    bool operate< (const Edge &W)const // 重载<，便于排序
+    {
+        return w<W.w;
+    }
+}edges[M];
+
+int find(int x)
+{
+    if(p[x] != x)
+        p[x] = find(p[x]);
+    return p[x];
+}
+
+int kruskal()
+{
+    // 初始化
+    sort(edges, edges+m);
+    for(int i=1 ; i<=n ; i++)
+        p[i] = i;
+    int res = 0, cnt = 0;
+    
+    for(int i=0 ; i<m ; i++)
+    {
+        auto t = edges[i];
+        int a = find(t.a), b = find(t.b), w = t.w;
+        if(a != b) // 如果两个连通块不连通，则将这两个连通块合并
+        {
+            p[find(a)] = find(b);
+            res += w;
+            cnt++;
+        }
+    }
+    if(cnt < n-1) return INF;
+    return res;
+}
+```
+## 二分图
+### 染色法
+适用于判断图是否是二分图
+- 时间复杂度**O(m+n)**
+```cpp
+int h[N], e[M], ne[M], idx; // 邻接表存储图
+int color[N]; // 表示每个点的颜色，0表示未染色，1/2表示两种颜色
+// u号点的染色。如果出现矛盾返回false
+bool dfs(int u, int c)
+{
+    color[u] = c;
+    for(int i=h[u] ; i!=-1 ; i=ne[i])
+    {
+        int j = e[i];
+        if(color[j] == 0) // 未被染色
+        {
+            if(!dfs(j, 3-c))
+                return false;
+        }
+        else // 被染色
+        {
+            if(color[j] == 3-c)
+                return false;
+        }
+    }
+    return true;
+}
+
+bool check()
+{
+    // 初始化
+    memset(h, -1, sizeof h);
+    // 遍历所有点（可能不是连通图）
+    for(int i=1 ; i<=n ; i++)
+        if(!color[i]) // 未被染色
+            if(!dfs(i, 1))
+                return false;
+    return true;
+}
+```
+### 匈牙利算法
+适用于找到二分图的最大匹配
+- 时间复杂度**O(mn)**（实际运行时间远小于）
+- 只需要存一个方向的边
+```cpp
+int h[N], e[M], ne[M], idx; // 邻接表存储所有边
+int match[N]; // 存储第二个集合中的每个点当前匹配的第一个集合中的点
+bool st[N]; // 表示第二个集合中的每个点是否已经被遍历过
+// 第一个集合元素x是否能找到
+bool find(int x)
+{
+    for(int i=h[x] ; i!=-1 ; i=ne[i]) // 遍历所有边
+    {
+        int j = e[i];
+        if(!st[j])
+        {
+            st[j] = true;
+            if(match[j]==0 || find(match[j])) // 未匹配或已匹配但能更换
+            {
+                match[j] = x;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+int res = 0;
+// 依次枚举第一个集合中的每个点能否匹配第二个集合中的点
+for(int i=1 ; i<n1 ; i++)
+{
+    memset(st, false, sizeof st);
+    if(find(i)) res++;
+}
 ```

@@ -32,7 +32,7 @@ const int N = 100010;
 // 邻接表
 int e[2*N], ne[2*N], h[N];
 int idx;
-int color[N];
+int color[N]; // 0表示未染色，1/2表示两种颜色
 
 int n, m;
 
@@ -43,7 +43,7 @@ void add(int x, int y)
     h[x] = idx;
     idx++;
 }
-// 在i处执行DFS进行染色(c=1/2)
+// 在u号点处执行DFS进行染色(c=1/2)
 bool dfs(int u, int c)
 {
     color[u] = c;
@@ -81,7 +81,7 @@ int main()
     }
     // 染色法
     bool flag = true;
-    for(int i=1 ; i<=n ; i++)
+    for(int i=1 ; i<=n ; i++)// 遍历所有点,因为可能不是连通图
     {
         if(!color[i]) // 如果还未染色
         {
