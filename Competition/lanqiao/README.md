@@ -19,6 +19,6 @@
 - [P12140 [蓝桥杯 2025 省 A] 抽奖](https://www.luogu.com.cn/problem/P12140)：模拟
 - [P12141 [蓝桥杯 2025 省 A] 红黑树](https://www.luogu.com.cn/problem/P12141)：位运算/树的存储
 - [P12142 [蓝桥杯 2025 省 A] 黑客](https://www.luogu.com.cn/problem/P12142)
-- [P12143 [蓝桥杯 2025 省 A] 好串的数目](https://www.luogu.com.cn/problem/P12143)
+- [P12143 [蓝桥杯 2025 省 A] 好串的数目](https://www.luogu.com.cn/problem/P12143)：数学知识
 - [P12144 [蓝桥杯 2025 省 A] 地雷阵](https://www.luogu.com.cn/problem/P12144)
 - [P12145 [蓝桥杯 2025 省 A] 扫地机器人](https://www.luogu.com.cn/problem/P12145)
