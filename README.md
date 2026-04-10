@@ -1184,3 +1184,28 @@ for(int i=1 ; i<n1 ; i++)
     if(find(i)) res++;
 }
 ```
+# 数学知识
+1. $\pi$值
+```cpp
+// 使用math中的宏定义M_PI
+#define _USE_MATH_DEFINES // define必须要在include前面
+#include <cmath>
+
+const double pi = M_PI;
+
+// 计算\pi的近似值
+#include <cmath>
+const double pi = acos(-1,0);
+```
+
+2. 三角函数
+注意三角函数中的输入单位是弧度（$弧度=角度*\pi / 180$即`radians = degrees*M_PI/180.0`）
+```cpp
+sin(double x)// 计算角x（以弧度为单位）的正弦值。
+cos(double x)// 计算角的余弦值。
+tan(double x)// 计算角的正切值。
+asin(double x)// 计算x的反正弦值，返回弧度。
+acos(double x)// 计算x的反余弦值，返回弧度。
+atan(double x)// 计算x的反正切值，返回弧度。
+atan2(double y, double x)// 计算点(x, y)与x轴正方向之间的角度，返回其弧度
+```
