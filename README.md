@@ -59,17 +59,15 @@ void merge_sort(int q[], int l, int r)
 }
 ```
 ## 拓扑排序
+- 算法结束后q中就是拓扑序列
 ```cpp
-int n, m;// 点和边数量
 // 存储图
-int h[N], ne[N], e[N];
-int idx;
+int h[N], ne[N], e[N], idx;
 // 队列
-int q[N];
-int hh, tt;
+int q[N], hh, tt;
 // 每个点的入度
 int d[N]; // 在读入边时记录
-// 返回图存在拓扑排序。q中就是拓扑序列
+// 返回图是否存在拓扑排序
 bool tolsort()
 {
     // 初始化
@@ -141,7 +139,7 @@ int binary_search2(int x)
 ```cpp
 double binary_search(double l, double r)
 {
-    while(r-l>1e-8)
+    while(r-l>1e-8) // 保留6位小数
     {
         double mid = (l+r) / 2;
         if(check(mid)) // 在右区间
@@ -207,7 +205,7 @@ int x = (n >> k) & 1 //求二进制n的第k位数字
 int lowbit(n){n & -n} //返回n的最后一位1
 ```
 # 离散化
-
+离散化可看作特殊的hash
 ```cpp
 vector<int> alls;// 存储所有待离散化的值
 sort(alls.begin(), alls.end()); // 将所有值排序
