@@ -8,7 +8,7 @@
 - [P9233 [蓝桥杯 2023 省 A] 颜色平衡树](https://www.luogu.com.cn/problem/P9233)
 - [P9234 [蓝桥杯 2023 省 A] 买瓜](https://www.luogu.com.cn/problem/P9234)
 - [P9235 [蓝桥杯 2023 省 A] 网络稳定性](https://www.luogu.com.cn/problem/P9235)
-- [P9236 [蓝桥杯 2023 省 A] 异或和之和](https://www.luogu.com.cn/problem/P9236)
+- [P9236 [蓝桥杯 2023 省 A] 异或和之和](https://www.luogu.com.cn/problem/P9236)：前缀和+位运算
 - [P9237 [蓝桥杯 2023 省 A] 像素放置](https://www.luogu.com.cn/problem/P9237)
 - [P9238 [蓝桥杯 2023 省 A] 翻转硬币](https://www.luogu.com.cn/problem/P9238)
 ## 2024
