@@ -699,36 +699,38 @@ deque, 双端队列
 ```
 
 8. hash
-```
-set, map, multiset, multimap, 基于平衡二叉树（红黑树），动态维护有序序列
-    size()
-    empty()
-    clear()  删除所有元素
-    begin()/end()
-    ++, -- 返回前驱和后继，时间复杂度 O(logn)
+    1. 基于平衡二叉树（红黑树），动态维护有序序列
+    ```
+    set, map, multiset, multimap, 
+        size()
+        empty()
+        clear()  删除所有元素
+        begin()/end()
+        ++, -- 返回前驱和后继，时间复杂度 O(logn)
 
-    set/multiset
-        insert()  插入一个数
-        find()  查找一个数
-        count()  返回某一个数的个数
-        erase()
-            (1) 输入是一个数x，删除所有x   O(k + logn)
-            (2) 输入一个迭代器，删除这个迭代器
-        lower_bound()/upper_bound()
-            lower_bound(x)  返回大于等于x的最小的数的迭代器
-            upper_bound(x)  返回大于x的最小的数的迭代器
-    map/multimap
-        insert()  插入的数是一个pair
-        erase()  输入的参数是pair或者迭代器
-        find()
-        []  注意multimap不支持此操作。 时间复杂度是 O(logn)
-        lower_bound()/upper_bound()
-```
-```
-unordered_set, unordered_map, unordered_multiset, unordered_multimap, 基于哈希表
-    和上面类似，增删改查的时间复杂度是 O(1)
-    不支持 lower_bound()/upper_bound()， 迭代器的++，--
-```
+        set/multiset
+            insert()  插入一个数
+            find()  查找一个数
+            count()  返回某一个数的个数
+            erase()
+                (1) 输入是一个数x，删除所有x   O(k + logn)
+                (2) 输入一个迭代器，删除这个迭代器
+            lower_bound()/upper_bound()
+                lower_bound(x)  返回大于等于x的最小的数的迭代器
+                upper_bound(x)  返回大于x的最小的数的迭代器
+        map/multimap
+            insert()  插入一个pair
+            erase()  输入的参数是pair或者迭代器
+            find()
+            []  注意multimap不支持此操作。 时间复杂度是 O(logn)
+            lower_bound()/upper_bound()
+    ```
+    2. 基于哈希表
+    ```
+    unordered_set, unordered_map, unordered_multiset, unordered_multimap, 
+        和上面类似，增删改查的时间复杂度是 O(1)
+        不支持 lower_bound()/upper_bound()， 迭代器的++，--
+    ```
 
 9. bitset
 ```
