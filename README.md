@@ -519,6 +519,7 @@ const int null = 0x3f3f3f3f; // 约定数据范围之外的数表示空
 int h[N];// hash数组
 
 // 如果x在hash中，返回位置；如果x不在hash中，返回应该存的位置
+// 查看返回位置的值，如果是null，则
 int find(int x)
 {
     int k = (x % N + N) % N; // 确保k是正数
@@ -537,7 +538,7 @@ memset(h, 0x3f, sizeof h); // memset是按字节赋值的
 
 2. 拉链法
 ```cpp
-const int N = 100003; // 最好用质数（编程遍历求）
+const int N = 100003; // 最好用质数（编程遍历求），是题目数据范围的1倍即可
 
 int h[N];// hash数组，每个位置相当于head头指针，指向链表中第一个节点（-1表示空）
 int e[N], ne[N], idx;// 用一个链表存储所有hash的N条链（将链表拆为N个链）
@@ -620,6 +621,7 @@ void add(int a, int b, int w)
 
 ## STL
 1. vector
+`#include<vector>`导入
 ```
 vector, 变长数组，倍增的思想
     size()  返回元素个数
@@ -627,7 +629,7 @@ vector, 变长数组，倍增的思想
     clear()  清空
     front()/back()  返回开头/末尾元素
     push_back()/pop_back() 在末尾增加/删除元素
-    begin()/end()
+    begin()/end() 迭代器
     []  访问元素
     支持比较运算，按字典序
 ```
@@ -700,15 +702,16 @@ deque, 双端队列
 
 8. hash
     1. 基于平衡二叉树（红黑树），动态维护有序序列
+    `#include <unordered_map>`/`#include <unordered_set>`导入
     ```
     set, map, multiset, multimap, 
         size()
         empty()
         clear()  删除所有元素
-        begin()/end()
+        begin()/end() 迭代器
         ++, -- 返回前驱和后继，时间复杂度 O(logn)
 
-        set/multiset
+        set/multiset 只存储键
             insert()  插入一个数
             find()  查找一个数
             count()  返回某一个数的个数
@@ -718,10 +721,10 @@ deque, 双端队列
             lower_bound()/upper_bound()
                 lower_bound(x)  返回大于等于x的最小的数的迭代器
                 upper_bound(x)  返回大于x的最小的数的迭代器
-        map/multimap
+        map/multimap 存储键值对
             insert()  插入一个pair
             erase()  输入的参数是pair或者迭代器
-            find()
+            find() 查找键，存在返回迭代器，不存在返回end()
             []  注意multimap不支持此操作。 时间复杂度是 O(logn)
             lower_bound()/upper_bound()
     ```
