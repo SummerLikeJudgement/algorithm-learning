@@ -18,17 +18,38 @@ void quick_sort(int q[], int l, int r)
         {} //移动左指针
         while(q[--j] > x)
         {} //移动右指针
-        if (i<j) //交换元素
-        {
+        if (i<j) //只有i<j才交换元素（可能i>j）
             swap(q[i], q[j]);
-        }
     }
     //递归处理
-    quick_sort(q, l, j); // 以j作为边界，x就不能为q[r];以i作为边界，x就不能为q[l]
-    quick_sort(q, j+1, r); // 即不能取到边界，否则会死循环(同一个区间无限递归)
+    quick_sort(q, l, j); // 以j作为边界，x就不能为q[r];以i作为边界，x就不能为q[l],即不能取到边界，否则会死循环(同一个区间无限递归)
+    quick_sort(q, j+1, r); // l~j,j+1~r或l-i-1,i~r
 }
 ```
+### 快速选择
+```cpp
+// 在q的[l,r]中找到最终下标为k的数
+int quick_select(int q[], int l, int r, int k)
+{
+    if(l == r) return q[l]; 
+    int i = l-1, j = r+1;
+    int base = q[l];
 
+    while(i<j)
+    {
+        while(q[++i] < base){}
+        while(q[--j] > base){}
+
+        if(i<j)
+            swap(q[i], q[j]);
+    }
+
+    if(k <= j) 
+        return quick_select(q, l, j, k);
+    else 
+        return quick_select(q, j+1, r, k);
+}
+```
 ## 归并排序
 - 稳定的，更适合链式存储
 ```cpp
@@ -479,7 +500,7 @@ if(find(a) == find(b)) else
 
 ## 堆
 实现的是小根堆，利用up和down可实现：将x插入堆、求堆中的最小值、删除堆中最小值、删除任意一个元素、修改任意一个元素
-- h从下标1开始存储
+- h从下标1开始存储，下标0不存储任何东西
 ```cpp
 int h[N], size_;//堆，堆当前存入的个数
 
@@ -487,6 +508,7 @@ int h[N], size_;//堆，堆当前存入的个数
 void down(int x)
 {
     int t = x;// t存储三个节点中最小的数的下标
+    // 找到最小的数的下标
     if (x*2 <= size_ && h[x*2] < h[t]) t = x*2;
     if (x*2+1 <= size_ && h[x*2+1] < h[t]) t = x*2+1;
 
@@ -506,7 +528,7 @@ void up(int x)
     }
 }
 // O(n)将无序数组h[n]建堆
-for(int i=n/2 ; i ; i--)
+for(int i=n/2 ; i ; i--) // n即为size_
     down(i);
 ```
 
