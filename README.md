@@ -1,6 +1,5 @@
 **各算法模板**
 
-------------
 # 排序
 模板参考：https://www.acwing.com/file_system/file/content/whole/index/content/3190/
 ## 快速排序
@@ -1237,3 +1236,12 @@ acos(double x)// 计算x的反余弦值，返回弧度。
 atan(double x)// 计算x的反正切值，返回弧度。
 atan2(double y, double x)// 计算点(x, y)与x轴正方向之间的角度，返回其弧度
 ```
+
+------------
+
+**编程经验**
+
+# sort(begin(), end())
+`#include<algorithm>`导入
+1. 排序vector内部：基础类型直接升序排序，结构体自定义<运算符直接升序排序
+2. 排序string内部：内部字符串升序排序
