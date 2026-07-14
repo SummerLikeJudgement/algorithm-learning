@@ -17,7 +17,7 @@ void quick_sort(int q[], int l, int r)
         {} //移动左指针
         while(q[--j] > x)
         {} //移动右指针
-        if (i<j) //只有i<j才交换元素（可能i>j）
+        if (i<j) //只有i<j才交换元素（可能i>=j）
             swap(q[i], q[j]);
     }
     //递归处理
