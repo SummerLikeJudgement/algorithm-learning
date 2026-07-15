@@ -55,3 +55,29 @@ public:
         return f[n][s];
     }
 };
+
+
+/// 【一维动态规划】类似于01背包问题的一维优化。
+const int M = 10005;
+class Solution {
+public:
+    bool f[M];
+    int s;
+    bool canPartition(vector<int>& nums) {
+        int n = nums.size();
+        int sum = 0;
+        for(int i=0 ; i<n ; i++)
+            sum += nums[i];
+        // 总和为奇数
+        if(sum % 2 == 1)
+            return false;
+        // 总和为偶数
+        s = sum / 2;
+        // 初始化
+        f[0] = true;
+        for(int i=1 ; i<=n ; i++)
+            for(int j=s ; j>=nums[i-1] ; j--) // 直接限制j的范围
+                f[j] = f[j] || f[j-nums[i-1]];
+        return f[s];
+    }
+};
