@@ -778,6 +778,7 @@ bitset, 圧位
     flip(k) 把第k位取反
 ```
 
+
 # 搜索与图论
 模板参考：https://www.acwing.com/file_system/file/content/whole/index/content/3272/
 
@@ -1243,6 +1244,19 @@ atan2(double y, double x)// 计算点(x, y)与x轴正方向之间的角度，返
 **编程经验**
 
 # sort(begin(), end())
-`#include<algorithm>`导入
+`#include<algorithm>`导入，排序容器元素
 1. 排序vector内部：基础类型直接升序排序，结构体自定义<运算符直接升序排序
 2. 排序string内部：内部字符串升序排序
+
+
+# reverse(begin(), end())
+`#include<algorithm>`导入，反转容器元素
+1. stl容器（支持vector、deque、list（双向链表）、array、string）：使用begin、end
+    ```cpp
+    reverse(v.begin(), v.end()); // 反转元素
+    reverse(v.begin() + 1, v.begin() + 5); // 反转部分元素
+    ```
+2. 数组：使用指针
+    ```cpp
+    reverse(arr, arr + n);
+    ```
