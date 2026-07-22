@@ -29,6 +29,8 @@
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
+        if(nums.size() == 0)// 判断是否为空
+            return 0;
         int ans = 1;
         unordered_set<int> n;
         for(int i=0 ; i<nums.size() ; i++)
