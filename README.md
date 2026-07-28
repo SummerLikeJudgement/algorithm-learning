@@ -696,7 +696,10 @@ priority_queue, 优先队列，默认是大根堆(堆顶元素最大)
     push()  插入一个元素
     top()  返回堆顶元素
     pop()  弹出堆顶元素
-    定义成小根堆(堆顶元素最小)的方式：priority_queue<int, vector<int>, greater<int>> q;
+    定义成小根堆(堆顶元素最小)的方式
+    priority_queue<int, vector<int>, greater<int>> q;
+    定义元素为pair的方式
+    priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(&cmp)> q(cmp);
 ```
 
 6. stack
