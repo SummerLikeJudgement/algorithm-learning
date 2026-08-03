@@ -1245,14 +1245,13 @@ atan2(double y, double x)// 计算点(x, y)与x轴正方向之间的角度，返
 ------------
 
 **编程经验**
-
-# sort(begin(), end())
+# 编程技巧
+## sort(begin(), end())
 `#include<algorithm>`导入，排序容器元素
 1. 排序vector内部：基础类型直接升序排序，结构体自定义<运算符直接升序排序
 2. 排序string内部：内部字符串升序排序
 
-
-# reverse(begin(), end())
+## reverse(begin(), end())
 `#include<algorithm>`导入，反转容器元素
 1. stl容器（支持vector、deque、list（双向链表）、array、string）：使用begin、end
     ```cpp
@@ -1263,3 +1262,60 @@ atan2(double y, double x)// 计算点(x, y)与x轴正方向之间的角度，返
     ```cpp
     reverse(arr, arr + n);
     ```
+
+# 算法总结
+## 子串回文判断
+1. DP预处理（区间DP）：时间复杂度$O(N^2)$，空间复杂度$O(N^2)$，适用于**多次查询+n不大的情况**
+```cpp
+// 需要保存每个子串的结果进行多次查询：二维dp
+bool f[N][N]; // 或 vector<vector<bool>> f(N, vector<bool>(N, false));
+for (int i=n-1; i>=0; --i)
+        for (int j=i+1; j<n; ++j)
+            if (s[i] == s[j] && f[i+1][j-1])
+                f[i][j] = true;
+// 不需要保存每个子串的结果只需要一次查询：一维dp
+bool f[N]; // 或 vector<bool> f(n, false);
+for (int i=n-1; i>=0; --i)
+    for (int j=n-1; j>=i+1; --j)
+        if (s[i]==s[j] && f[j-1])
+            f[j] = true;
+        else
+            f[j] = false;
+```
+2. manacher：时间复杂度$O(N)$，空间复杂度$O(N)$，适用于**多次查询+n很大的情况**
+```cpp
+int p[N];// 表示下标i为中心的最大回文半径（包括对称中心）（由于插入了#等符号，所以等于回文长度-1）
+int mid, mr;// 已经确定的右侧最靠右的回文串的对称中心和右边界
+char c[N]; //从下标1开始存储字符串
+char s[N]; //存储对原始字符串进行处理后（从下标1开始存储）
+
+// 预处理原始字符串
+int cnt = 0;// s的当前位置
+int n = strlen(c+1);
+s[++cnt] = '~';// 起始边界标记
+s[++cnt] = '#';
+for(int i=1 ; i<=n ; i++)
+{
+    s[++cnt] = c[i];
+    s[++cnt] = '#';
+}
+s[++ cnt] = '!';// 结尾位置标记
+// 计算字符串每个位置的回文情况
+void solve() {
+	for(int i=2 ; i<=cnt-1 ; i++)
+    {
+		if(i <= mr)// i在已找到回文串中
+            p[i] = min(p[mid*2 - i], mr-i+1);
+		else// i不在已找到的回文串中
+            p[i] = 1;
+        // 暴力扩展
+		while(s[i-p[i]] == s[i+p[i]]) 
+            ++p[i];
+		if(i+p[i] > mr) 
+        {
+            mr = i+p[i]-1;
+            mid = i;
+        }
+	}
+}
+```
