@@ -1246,6 +1246,8 @@ atan2(double y, double x)// 计算点(x, y)与x轴正方向之间的角度，返
 
 **编程经验**
 # 编程技巧
+- 注意`memset(f, 0x3f, sizeof f)`设置的最大值0x3f3f3f3f和INT_MAX是不相等的
+- 给出所有的**具体**方案：DFS/BFS
 ## sort(begin(), end())
 `#include<algorithm>`导入，排序容器元素
 1. 排序vector内部：基础类型直接升序排序，结构体自定义<运算符直接升序排序
